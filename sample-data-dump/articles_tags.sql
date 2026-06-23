@@ -1,0 +1,16 @@
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (1, 1);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (1, 2);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (2, 2);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (3, 2);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (6, 2);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (10, 2);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (1, 3);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (1, 4);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (2, 5);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (3, 6);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (4, 7);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (4, 8);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (5, 8);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (6, 8);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (5, 9);
+INSERT INTO realword.articles_tags (article_id, tag_id) VALUES (10, 10);

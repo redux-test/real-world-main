@@ -1,0 +1,11 @@
+INSERT INTO realword.tags (id, name) VALUES (1, 'Google');
+INSERT INTO realword.tags (id, name) VALUES (2, 'AI');
+INSERT INTO realword.tags (id, name) VALUES (3, 'LLM');
+INSERT INTO realword.tags (id, name) VALUES (4, 'Android');
+INSERT INTO realword.tags (id, name) VALUES (5, 'Laptop');
+INSERT INTO realword.tags (id, name) VALUES (6, 'School');
+INSERT INTO realword.tags (id, name) VALUES (7, 'Gartner');
+INSERT INTO realword.tags (id, name) VALUES (8, 'Trends');
+INSERT INTO realword.tags (id, name) VALUES (9, 'Forbes');
+INSERT INTO realword.tags (id, name) VALUES (10, 'Test');
+INSERT INTO realword.tags (id, name) VALUES (11, 'Changed');
