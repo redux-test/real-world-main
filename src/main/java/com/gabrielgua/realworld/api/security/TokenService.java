@@ -4,9 +4,12 @@ import com.gabrielgua.realworld.domain.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +83,15 @@ public class TokenService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException ex) {
-            throw new RuntimeException("Token invalid");
+            throw new RuntimeException("Token has expired", ex);
+        } catch (MalformedJwtException ex) {
+            throw new RuntimeException("Malformed JWT token", ex);
+        } catch (SignatureException ex) {
+            throw new RuntimeException("Invalid JWT signature", ex);
+        } catch (UnsupportedJwtException ex) {
+            throw new RuntimeException("Unsupported JWT token", ex);
+        } catch (IllegalArgumentException ex) {
+            throw new RuntimeException("JWT token is empty or null", ex);
         }
     }
 

@@ -16,10 +16,15 @@ public class AuthUtils {
     }
 
     public String getCurrentUserEmail() {
-        return getAuthentication().getName();
+        Authentication auth = getAuthentication();
+        if (auth == null) {
+            throw new IllegalStateException("No authenticated user found");
+        }
+        return auth.getName();
     }
 
     public boolean isAuthenticated() {
-        return getAuthentication() != null;
+        Authentication auth = getAuthentication();
+        return auth != null && auth.isAuthenticated();
     }
 }
