@@ -68,12 +68,12 @@ public class WeeklyStatsJob {
                     averageLikes
                 );
                 
-                log.info("Sent weekly stats to user: {}", user.getEmail());
+                log.info("Sent weekly stats to user ID: {}", user.getId());
             } catch (MessagingException e) {
-                log.error("Failed to send weekly stats to user: {}", user.getEmail(), e);
+                log.error("Failed to send weekly stats to user ID: {}", user.getId(), e);
             }
         }
         
         log.info("Completed weekly stats job. Processed {} users", usersWithArticles.size());
     }
-} 
+}

@@ -32,12 +32,12 @@ public class WelcomeEmailJob {
         for (User user : newUsers) {
             try {
                 emailService.sendWelcomeEmail(user.getEmail(), user.getProfile().getUsername());
-                log.info("Sent welcome email to user: {}", user.getEmail());
+                log.info("Sent welcome email to user ID: {}", user.getId());
             } catch (MessagingException e) {
-                log.error("Failed to send welcome email to user: {}", user.getEmail(), e);
+                log.error("Failed to send welcome email to user ID: {}", user.getId(), e);
             }
         }
         
         log.info("Completed welcome email job. Processed {} users", newUsers.size());
     }
-} 
+}
