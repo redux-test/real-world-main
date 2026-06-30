@@ -1,5 +1,6 @@
 package com.gabrielgua.realworld.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,13 @@ public class User {
     private Long id;
 
     private String email;
+    
+    @JsonIgnore
+    @ToString.Exclude
     private String token;
+    
+    @JsonIgnore
+    @ToString.Exclude
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
