@@ -39,7 +39,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         token = authHeader.substring(6);
         email = tokenService.extractEmail(token);
 
-        if (email != null && !isAuthenticated()) {
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userDetailsService.loadUserByUsername(email);
 
             if (tokenService.isTokenValid(token, userDetails.getUsername())) {
@@ -52,9 +52,5 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
 
-    }
-
-    private boolean isAuthenticated() {
-        return SecurityContextHolder.getContext().getAuthentication() != null;
     }
 }

@@ -47,9 +47,15 @@ public class ArticleController {
         Pageable pageable = PageRequest.of(offset, limit, DEFAULT_FILTER_SORT);
         var articles = articleService.listAll(filter, pageable).getContent();
 
+        // Check if user is authenticated and include personalized content
         if (authUtils.isAuthenticated()) {
-            var profile = userService.getCurrentUser().getProfile();
-            return articleAssembler.toCollectionModel(profile, articles);
+            try {
+                var profile = userService.getCurrentUser().getProfile();
+                return articleAssembler.toCollectionModel(profile, articles);
+            } catch (Exception e) {
+                // If there's an issue getting the current user, fall back to unauthenticated response
+                return articleAssembler.toCollectionModel(articles);
+            }
         }
 
         return articleAssembler.toCollectionModel(articles);
@@ -61,6 +67,14 @@ public class ArticleController {
             @RequestParam(required = false, defaultValue = DEFAULT_FILTER_LIMIT) int limit,
             @RequestParam(required = false, defaultValue = DEFAULT_FILTER_OFFSET) int offset
     ) {
+
+        // Feed endpoint requires authentication
+        if (!authUtils.isAuthenticated()) {
+            return ArticleWrapper.builder()
+                    .articles(new ArrayList<>())
+                    .articlesCount(0)
+                    .build();
+        }
 
         var profile = userService.getCurrentUser().getProfile();
         Pageable pageable = PageRequest.of(offset, limit, DEFAULT_FILTER_SORT);
@@ -75,9 +89,15 @@ public class ArticleController {
     public ArticleResponse getBySlug(@PathVariable String slug) {
         var article = articleService.getBySlug(slug);
 
+        // Include personalized content if user is authenticated
         if (authUtils.isAuthenticated()) {
-            var profile = userService.getCurrentUser().getProfile();
-            return articleAssembler.toResponse(profile, article);
+            try {
+                var profile = userService.getCurrentUser().getProfile();
+                return articleAssembler.toResponse(profile, article);
+            } catch (Exception e) {
+                // If there's an issue getting the current user, fall back to unauthenticated response
+                return articleAssembler.toResponse(article);
+            }
         }
 
         return articleAssembler.toResponse(article);
