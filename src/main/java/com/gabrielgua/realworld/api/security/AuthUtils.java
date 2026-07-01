@@ -20,6 +20,7 @@ public class AuthUtils {
     }
 
     public boolean isAuthenticated() {
-        return getAuthentication() != null;
+        Authentication auth = getAuthentication();
+        return auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getName());
     }
 }
