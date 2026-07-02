@@ -61,6 +61,11 @@ public class ArticleController {
             @RequestParam(required = false, defaultValue = DEFAULT_FILTER_LIMIT) int limit,
             @RequestParam(required = false, defaultValue = DEFAULT_FILTER_OFFSET) int offset
     ) {
+        // Check if user is authenticated before attempting to retrieve current user
+        if (!authUtils.isAuthenticated()) {
+            // Return empty feed for unauthenticated users
+            return articleAssembler.toCollectionModel(new ArrayList<>());
+        }
 
         var profile = userService.getCurrentUser().getProfile();
         Pageable pageable = PageRequest.of(offset, limit, DEFAULT_FILTER_SORT);
