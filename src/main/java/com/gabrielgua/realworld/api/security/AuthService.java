@@ -25,8 +25,7 @@ public class AuthService {
 
     public UserResponse register(User user) {
         var token = tokenService.generateToken(setDefaultClaims(user), user.getEmail());
-        userService.setToken(user, token);
-        return toUserResponse(user);
+        return toUserResponse(user, token);
     }
 
 
@@ -39,12 +38,11 @@ public class AuthService {
         var user = userService.getByEmail(authenticate.getEmail());
         var token = tokenService.generateToken(setDefaultClaims(user), user.getEmail());
 
-        userService.setToken(user, token);
-        return toUserResponse(user);
+        return toUserResponse(user, token);
     }
 
-    private UserResponse toUserResponse(User user) {
-        return userAssembler.toResponse(user);
+    private UserResponse toUserResponse(User user, String token) {
+        return userAssembler.toResponse(user, token);
     }
 
     private Map<String, Object> setDefaultClaims(User user) {

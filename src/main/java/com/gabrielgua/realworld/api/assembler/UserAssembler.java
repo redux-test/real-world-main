@@ -17,10 +17,10 @@ public class UserAssembler {
 
     private final ModelMapper modelMapper;
 
-    public UserResponse toResponse(User user) {
+    public UserResponse toResponse(User user, String token) {
         return UserResponse.builder()
                 .email(user.getEmail())
-                .token(user.getToken())
+                .token(token)
                 .bio(user.getProfile().getBio())
                 .image(user.getProfile().getImage())
                 .username(user.getProfile().getUsername())
