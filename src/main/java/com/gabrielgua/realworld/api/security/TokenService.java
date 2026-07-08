@@ -3,11 +3,13 @@ package com.gabrielgua.realworld.api.security;
 import com.gabrielgua.realworld.domain.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -80,7 +82,9 @@ public class TokenService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException ex) {
-            throw new RuntimeException("Token invalid");
+            throw new org.springframework.security.core.AuthenticationException("Token expired") {};
+        } catch (JwtException ex) {
+            throw new org.springframework.security.core.AuthenticationException("Token invalid") {};
         }
     }
 
