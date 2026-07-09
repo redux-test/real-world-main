@@ -4,6 +4,7 @@ import com.gabrielgua.realworld.domain.model.User;
 import com.gabrielgua.realworld.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,11 @@ public class AuthUtils {
     }
 
     public String getCurrentUserEmail() {
-        return getAuthentication().getName();
+        Authentication auth = getAuthentication();
+        if (auth == null) {
+            throw new AuthenticationCredentialsNotFoundException("User not authenticated");
+        }
+        return auth.getName();
     }
 
     public boolean isAuthenticated() {

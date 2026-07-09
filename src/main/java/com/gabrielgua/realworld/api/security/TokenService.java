@@ -46,11 +46,6 @@ public class TokenService {
     }
 
     public boolean isTokenValid(String token, String subject) {
-        var user = repository.findByEmail(subject);
-        if (user.isEmpty()) {
-            return false;
-        }
-
         final String email = extractEmail(token);
         return email.equals(subject) && !isTokenExpired(token);
     }

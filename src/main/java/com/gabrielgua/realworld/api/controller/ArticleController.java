@@ -56,7 +56,7 @@ public class ArticleController {
     }
 
     @GetMapping("/feed")
-    @CheckSecurity.Public.canRead
+    @CheckSecurity.Protected.canManage
     public ArticleWrapper getFeed(
             @RequestParam(required = false, defaultValue = DEFAULT_FILTER_LIMIT) int limit,
             @RequestParam(required = false, defaultValue = DEFAULT_FILTER_OFFSET) int offset
