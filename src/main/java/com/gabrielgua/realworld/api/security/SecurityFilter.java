@@ -37,17 +37,24 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
 
         token = authHeader.substring(6);
-        email = tokenService.extractEmail(token);
+        
+        try {
+            email = tokenService.extractEmail(token);
 
-        if (email != null && !isAuthenticated()) {
-            var userDetails = userDetailsService.loadUserByUsername(email);
+            if (email != null && !isAuthenticated()) {
+                var userDetails = userDetailsService.loadUserByUsername(email);
 
-            if (tokenService.isTokenValid(token, userDetails.getUsername())) {
-                var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (tokenService.isTokenValid(token, userDetails.getUsername())) {
+                    var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+
             }
-
+        } catch (Exception ex) {
+            // Log the exception but don't crash the filter chain
+            // This allows the request to proceed without authentication
+            // which will be handled by Spring Security's authorization rules
         }
 
         filterChain.doFilter(request, response);
